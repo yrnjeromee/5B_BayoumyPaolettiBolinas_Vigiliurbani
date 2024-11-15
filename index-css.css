@@ -1,3 +1,62 @@
 #map {
     height: 400px;
 }
+
+/* Contenitore per tabella, input e bottone */
+.container {
+    display: flex; /* Attiva layout flessibile */
+    align-items: flex-start; /* Allinea gli elementi in alto */
+    gap: 20px; /* Spaziatura tra gli elementi */
+    margin: 20px 0; /* Spaziatura sopra e sotto */
+}
+
+table {
+    border-collapse: collapse; /* Unisce i bordi */
+    width: 80%; /* Larghezza della tabella */
+    max-width: 1000px; /* Larghezza massima */
+    /*margin: 0 auto; Centra la tabella orizzontalmente */
+    font-family: Arial, sans-serif; /* Font leggibile */
+    font-size: 14px;
+    color: #333; /* Testo scuro */
+    background-color: #fff; /* Sfondo bianco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leggera ombra */
+}
+
+/* Bordo intorno alla tabella */
+table, th, td {
+    border: 1px solid #ccc; /* Bordo grigio chiaro */
+}
+
+/* Celle dell'intestazione */
+th {
+    background-color: #004085; /* Sfondo blu scuro */
+    color: white;
+}
+
+td:first-child {
+    font-weight: bold; /* Evidenzia la prima colonna (INDIRIZZO) */
+}
+
+/* Stile dell'input */
+#nome_posto {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px; /* Larghezza dell'input */
+}
+
+/* Stile del bottone */
+#button {
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #007BFF; /* Colore blu */
+    color: white; /* Testo bianco */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#button:hover {
+    background-color: #0056b3; /* Colore blu scuro al passaggio */
+}

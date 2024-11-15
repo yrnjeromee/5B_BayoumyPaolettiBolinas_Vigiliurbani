@@ -1,7 +1,7 @@
 import { API_KEY } from './cartella/config.js';
-let nome_posto = document.getElementById('nome_posto');
-const button = document.getElementById('button');
-const tabella = document.getElementById('table');
+let nome_posto = document.getElementById("nome_posto");
+const button = document.getElementById("button");
+const tabella = document.getElementById("table");
 let cordinate = [
     {
         name: 'Piazza del Duomo',
