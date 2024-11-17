@@ -1,18 +1,34 @@
 import { API_KEY } from './cartella/config.js';
-let nome_posto = document.getElementById("nome_posto");
-const button = document.getElementById("button");
 const tabella = document.getElementById("table");
+const button = document.getElementById("button");//alla pressione creare un modale
 let cordinate = [
     {
         name: 'Piazza del Duomo',
         coords: [45.4639102, 9.1906426],
+        targhe_coinvolte: ["1234567","8589282","7372919"],
+        dataeora: ["17/05/2006","02:14"],
+        morti: 4,
+        feriti: 12
     },
+    {
+        name: 'Corso Buenos Aires 10',
+        coords: [45.4762013, 9.2070085],
+        targhe_coinvolte: ["6573928","7378198"],
+        dataeora: ["26/7/2006","13:41"],
+        morti: 0,
+        feriti: 1
+    },
+    {
+        name: 'Via Gerolamo Vida 4',
+        coords: [45.4985238, 9.2252347],
+        targhe_coinvolte: ["7583814"],
+        dataeora: ["12/10/2006","10:21"],
+        morti: 1,
+        feriti: 0
+    }
 ];
-
-const header = '<tr><th>INDIRIZZO</th><th>TARGHE</th><th>DATA E ORA</th><th>NUMERO FERITI</th><th>NUMERO MORTI</th></tr>';
-
-/************************GESTIONE PULSANTE*********************/
-
+/*
+da cancellare, tenere a mente che alcune righe andranno riutilizzate nella modale.
 
 button.onclick = () => {
 let posto = nome_posto.value;
@@ -27,7 +43,7 @@ fetch(url)
     console.log(cordinate)
     mappa();
     });
-};
+};*/
 
 
 /************************GESTIONE PULSANTE*********************/
@@ -56,26 +72,28 @@ L.Marker.prototype.options.icon = L.icon({
 function mappa() {
     cordinate.forEach((place) => {
         const marker = L.marker(place.coords).addTo(map);
-        marker.bindPopup(`<b> ${place.name} </b>`);
+        marker.bindPopup(`<p> morti: ${place.morti} feriti : ${place.feriti} data : ${place.dataeora[0]} ora: ${place.dataeora[1]}</p>`);
     });
 }
-
-
-/************************GESTIONE MAPPA************************/
 
 
 /************************GESTIONE TABELLA**********************/
 
 
-function createTable () {
+const createTable = () => {
+    const header = '<tr><th>INDIRIZZO</th><th>TARGHE</th><th>DATA E ORA</th><th>NUMERO FERITI</th><th>NUMERO MORTI</th></tr>';
     let html = ''
-    for (let i in cordinate){
-        let row = `<tr><th>banana</th><th>banana</th><th>banana</th><th>banana</th><th>banana</th></tr>`;
-        html += row;
-    };
-    tabella.innerHTML = header + html;
+    return{
+        render: () => {
+            for (let i in cordinate){
+                let row = `<tr><td>${cordinate[i].name}</td><td>${cordinate[i].targhe_coinvolte}</td><td>${cordinate[i].dataeora}</td><td>${cordinate[i].feriti}</td><td>${cordinate[i].morti}</td></tr>`;
+                html += row;
+            };
+            tabella.innerHTML = header + html;
+        }
+    }
 };
 
 
 mappa();
-createTable();
+createTable().render();
