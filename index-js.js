@@ -9,6 +9,9 @@ const dataeora = document.getElementById("dataeora");
 const n_morti = document.getElementById("n_morti");
 const n_feriti = document.getElementById("n_feriti");
 const confirmButton = document.getElementById('confirmButton');
+const searchBar = document.getElementById("searchBar");
+const searchButton = document.getElementById("searchButton");
+
 let cordinate = [
     {
         name: 'Piazza del Duomo',
@@ -137,6 +140,34 @@ confirmButton.addEventListener('click', () => {
 
 
 /************************GESTIONE INSERIMENTO******************/
+
+
+/*************************GESTIONE BARRA DI RICERCA************/
+searchButton.onclick = function() {
+    filterTable();
+};
+function filterTable() {
+    const query = searchBar.value.toLowerCase();
+    const filteredData = cordinate.filter((place) =>
+        place.name.toLowerCase().includes(query)
+    );
+    renderTable(filteredData);
+}
+function renderTable(data) {
+    const header = '<tr><th>INDIRIZZO</th><th>TARGHE</th><th>DATA E ORA</th><th>NUMERO FERITI</th><th>NUMERO MORTI</th></tr>';
+    let html = '';
+    data.forEach((place) => {
+        let row = `<tr><td>${place.name}</td><td>${place.targhe_coinvolte.join(', ')}</td><td>${place.dataeora.join(', ')}</td><td>${place.feriti}</td><td>${place.morti}</td></tr>`;
+        html += row;
+    });
+    tabella.innerHTML = header + html;
+    mappa();
+    console.log("prova")
+}
+renderTable(cordinate);
+
+
+/*************************GESTIONE BARRA DI RICERCA************/
 
 
 mappa();
