@@ -1,6 +1,14 @@
 import { API_KEY } from './cartella/config.js';
 const tabella = document.getElementById("table");
+const modal = document.getElementById('modal');
 const button = document.getElementById("button");//alla pressione creare un modale
+const chiudiModale = document.getElementById('chiudiModale');
+const nome_posto = document.getElementById("nome_posto");
+const targhe = document.getElementById("targhe");
+const dataeora = document.getElementById("dataeora");
+const n_morti = document.getElementById("n_morti");
+const n_feriti = document.getElementById("n_feriti");
+const confirmButton = document.getElementById('confirmButton');
 let cordinate = [
     {
         name: 'Piazza del Duomo',
@@ -27,26 +35,6 @@ let cordinate = [
         feriti: 0
     }
 ];
-/*
-da cancellare, tenere a mente che alcune righe andranno riutilizzate nella modale.
-
-button.onclick = () => {
-let posto = nome_posto.value;
-const url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${posto}&format=json&`;
-fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-    console.log(data[0]['boundingbox'][0], data[0]['boundingbox'][2]);
-    let lat = data[0]['boundingbox'][0];
-    let lon = data[0]['boundingbox'][2];
-    cordinate.push({ name : posto, coords: [lat, lon] });
-    console.log(cordinate)
-    mappa();
-    });
-};*/
-
-
-/************************GESTIONE PULSANTE*********************/
 
 
 /************************GESTIONE MAPPA************************/
@@ -93,6 +81,62 @@ const createTable = () => {
         }
     }
 };
+
+
+/************************GESTIONE TABELLA**********************/
+
+
+/************************GESTIONE MODALE***********************/
+
+
+button.addEventListener('click', () => {
+    modal.classList.add('show'); // Aggiunge la classe "show"
+});
+
+// Chiudi la modale
+chiudiModale.addEventListener('click', () => {
+    modal.classList.remove('show'); // Rimuove la classe "show"
+});
+
+// Chiudi la modale quando si clicca fuori dal contenuto
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.classList.remove('show'); // Rimuove la classe "show"
+    }
+});
+
+
+/************************GESTIONE MODALE***********************/
+
+
+/************************GESTIONE INSERIMENTO******************/
+
+
+confirmButton.addEventListener('click', () => {
+    let posto = nome_posto.value;
+    let temp_targhe = targhe.value;
+    let temp_dataeora = dataeora.value;
+    let nMorti = n_morti.value;
+    let nFeriti = n_feriti.value;
+    console.log(posto, temp_targhe, temp_dataeora, nMorti, nFeriti);
+    let tutte_le_Targhe = temp_targhe.split(',').join('').split(' ');
+    let newDataeora = temp_dataeora.split(',').join('').split(' ');
+    const url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${posto}&format=json&`;
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+        console.log(data[0]['boundingbox'][0], data[0]['boundingbox'][2]);
+        let lat = data[0]['boundingbox'][0];
+        let lon = data[0]['boundingbox'][2];
+        cordinate.push({ name: posto, coords: [lat, lon], targhe_coinvolte: tutte_le_Targhe, dataeora: newDataeora, morti: nMorti, feriti: nFeriti });
+        console.log(cordinate);
+        mappa();
+        createTable().render();
+        });
+});
+
+
+/************************GESTIONE INSERIMENTO******************/
 
 
 mappa();
