@@ -70,7 +70,6 @@ const createTable = () => {
 
 /************************GESTIONE MODALE***********************/
 
-
 button.onclick = () => {
     modal.classList.add('show'); // Aggiunge la classe "show"
 };
@@ -83,7 +82,7 @@ chiudiModale.onclick = () => {
 // Chiudi la modale quando si clicca fuori dal contenuto
 window.onclick = (event) => {
     if (event.target === modal) {
-        modal.classList.remove('show'); // Rimuove la classe "show"
+        modal.classList.remove('show');
     }
 };
 
