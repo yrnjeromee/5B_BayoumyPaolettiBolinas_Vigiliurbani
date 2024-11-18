@@ -12,32 +12,7 @@ const confirmButton = document.getElementById('confirmButton');
 const searchBar = document.getElementById("searchBar");
 const searchButton = document.getElementById("searchButton");
 
-let cordinate = [
-    {
-        name: 'Piazza del Duomo',
-        coords: [45.4639102, 9.1906426],
-        targhe_coinvolte: ["1234567","8589282","7372919"],
-        dataeora: ["17/05/2006","02:14"],
-        morti: 4,
-        feriti: 12
-    },
-    {
-        name: 'Corso Buenos Aires 10',
-        coords: [45.4762013, 9.2070085],
-        targhe_coinvolte: ["6573928","7378198"],
-        dataeora: ["26/7/2006","13:41"],
-        morti: 0,
-        feriti: 1
-    },
-    {
-        name: 'Via Gerolamo Vida 4',
-        coords: [45.4985238, 9.2252347],
-        targhe_coinvolte: ["7583814"],
-        dataeora: ["12/10/2006","10:21"],
-        morti: 1,
-        feriti: 0
-    }
-];
+let cordinate = [];
 
 
 /************************GESTIONE MAPPA************************/
@@ -45,7 +20,7 @@ let cordinate = [
 
 let zoom = 12;
 let maxZoom = 19;
-let map = L.map('map').setView(cordinate[0].coords, zoom);
+let map = L.map('map').setView([45.4639102, 9.1906426], zoom);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: maxZoom,
 attribution:
@@ -86,9 +61,6 @@ const createTable = () => {
 };
 
 
-/************************GESTIONE TABELLA**********************/
-
-
 /************************GESTIONE MODALE***********************/
 
 
@@ -107,9 +79,6 @@ window.addEventListener('click', (event) => {
         modal.classList.remove('show'); // Rimuove la classe "show"
     }
 });
-
-
-/************************GESTIONE MODALE***********************/
 
 
 /************************GESTIONE INSERIMENTO******************/
@@ -135,7 +104,9 @@ confirmButton.addEventListener('click', () => {
         console.log(cordinate);
         mappa();
         createTable().render();
-        });
+        modal.classList.remove('show'); // Rimuove la classe "show"
+        salva();
+    });
 });
 
 
@@ -168,7 +139,48 @@ renderTable(cordinate);
 
 
 /*************************GESTIONE BARRA DI RICERCA************/
+/*************************GESTIONE SALVATAGGIO E CARICAMENTO***/
+function salva() {
+    return fetch('https://ws.cipiaceinfo.it/cache/set', {
+        headers: {
+            'Content-Type': 'application/json',
+            key: '12891abd-4716-4766-922b-6e46eba36b4c',
+        },
+        method: 'POST',
+        body: JSON.stringify({
+        key: 'incidenti',
+        value: cordinate,
+        }),
+    })
+    .then((r) => r.json())
+    .then((r) => {
+        console.log(r);
+    })
+    .catch((err) => console.log('Errore durante il salvataggio:', err));
+}
 
-
-mappa();
-createTable().render();
+function carica() {
+  return fetch('https://ws.cipiaceinfo.it/cache/get', {
+    headers: {
+      'Content-Type': 'application/json',
+      key: '12891abd-4716-4766-922b-6e46eba36b4c',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      key: 'incidenti',
+    }),
+  })
+    .then((r) => r.json())
+    .then((r) => {
+        cordinate = r.result;
+        console.log(r.result);
+        mappa();
+        createTable().render();
+    })
+    .catch((err) => {
+      console.log('Errore durante il caricamento:', err);
+      return [];
+  })
+}
+carica();
+/*************************GESTIONE SALVATAGGIO E CARICAMENTO***/
