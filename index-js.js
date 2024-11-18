@@ -93,18 +93,16 @@ const createTable = () => {
 
 
 button.addEventListener('click', () => {
-    modal.classList.add('show'); // Aggiunge la classe "show"
+    modal.classList.add('show');
 });
 
-// Chiudi la modale
 chiudiModale.addEventListener('click', () => {
-    modal.classList.remove('show'); // Rimuove la classe "show"
+    modal.classList.remove('show');
 });
 
-// Chiudi la modale quando si clicca fuori dal contenuto
 window.addEventListener('click', (event) => {
     if (event.target === modal) {
-        modal.classList.remove('show'); // Rimuove la classe "show"
+        modal.classList.remove('show');
     }
 });
 
