@@ -1,4 +1,4 @@
-import { API_KEY } from './cartella/config.js';
+import { API_KEY } from './config.js';
 const Milano = ["45.3867381","45.5358482","9.0408867","9.2781103"];
 const tabella = document.getElementById("table");
 const modal = document.getElementById('modal');
