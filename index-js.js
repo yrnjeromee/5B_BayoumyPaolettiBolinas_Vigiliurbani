@@ -1,16 +1,23 @@
 import { API_KEY } from './cartella/config.js';
+const Milano = ["45.3867381","45.5358482","9.0408867","9.2781103"];
 const tabella = document.getElementById("table");
 const modal = document.getElementById('modal');
 const button = document.getElementById("button");//alla pressione creare un modale
 const chiudiModale = document.getElementById('chiudiModale');
-const nome_posto = document.getElementById("nome_posto");
-const targhe = document.getElementById("targhe");
-const dataeora = document.getElementById("dataeora");
+const via = document.getElementById("via");
+const civico = document.getElementById("civico");
+const targa1 = document.getElementById("targa1");
+const targa2 = document.getElementById("targa2");
+const targa3 = document.getElementById("targa3");
+const data = document.getElementById("data");
+const ora = document.getElementById("ora");
 const n_morti = document.getElementById("n_morti");
 const n_feriti = document.getElementById("n_feriti");
 const confirmButton = document.getElementById('confirmButton');
 const searchBar = document.getElementById("searchBar");
 const searchButton = document.getElementById("searchButton");
+const MAIUSCOLE = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+const numeri = ["1","2","3","4","5","6","7","8","9","0"];
 
 let cordinate = [];
 
@@ -64,55 +71,87 @@ const createTable = () => {
 /************************GESTIONE MODALE***********************/
 
 
-button.addEventListener('click', () => {
+button.onclick = () => {
     modal.classList.add('show'); // Aggiunge la classe "show"
-});
+};
 
 // Chiudi la modale
-chiudiModale.addEventListener('click', () => {
+chiudiModale.onclick = () => {
     modal.classList.remove('show'); // Rimuove la classe "show"
-});
+};
 
 // Chiudi la modale quando si clicca fuori dal contenuto
-window.addEventListener('click', (event) => {
+window.onclick = (event) => {
     if (event.target === modal) {
         modal.classList.remove('show'); // Rimuove la classe "show"
     }
-});
+};
 
 
 /************************GESTIONE INSERIMENTO******************/
 
 
-confirmButton.addEventListener('click', () => {
-    let posto = nome_posto.value;
-    let temp_targhe = targhe.value;
-    let temp_dataeora = dataeora.value;
-    let nMorti = n_morti.value;
-    let nFeriti = n_feriti.value;
-    console.log(posto, temp_targhe, temp_dataeora, nMorti, nFeriti);
-    let tutte_le_Targhe = temp_targhe.split(',').join('').split(' ');
-    let newDataeora = temp_dataeora.split(',').join('').split(' ');
-    const url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${posto}&format=json&`;
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-        console.log(data[0]['boundingbox'][0], data[0]['boundingbox'][2]);
-        let lat = data[0]['boundingbox'][0];
-        let lon = data[0]['boundingbox'][2];
-        cordinate.push({ name: posto, coords: [lat, lon], targhe_coinvolte: tutte_le_Targhe, dataeora: newDataeora, morti: nMorti, feriti: nFeriti });
-        console.log(cordinate);
-        mappa();
-        createTable().render();
-        modal.classList.remove('show'); // Rimuove la classe "show"
-        salva();
-    });
-});
-
-
+confirmButton.onclick = () => {
+    if (targa1.value && via.value && civico.value && data.value && ora.value && n_feriti.value && n_morti.value ){
+        let posto = via.value +" "+ civico.value + " milano";
+        //controllo targa 1//
+        let targhe = []
+        console.log(targa1.value.charCodeAt(0))
+        if (targa1.value.length === 7 && targa1.value.charCodeAt(0) > 64 && targa1.value.charCodeAt(0) < 91 && targa1.value.charCodeAt(1) > 64 && targa1.value.charCodeAt(1) < 91 && targa1.value.charCodeAt(2) > 47 && targa1.value.charCodeAt(2) < 58 && targa1.value.charCodeAt(3) > 47 && targa1.value.charCodeAt(3) < 58 && targa1.value.charCodeAt(4) > 47 && targa1.value.charCodeAt(4) < 58 && targa1.value.charCodeAt(5) > 64 && targa1.value.charCodeAt(5) < 91 && targa1.value.charCodeAt(6) > 64 && targa1.value.charCodeAt(6) < 91){
+            targhe.push(targa1.value)
+        } else {
+            alert("La targa 1 non è valida");
+        }
+        //controllo targa 2//
+        if (targa2.value !== ""){
+            if (targa2.value.length === 7 && targa2.value.charCodeAt(0) > 64 && targa2.value.charCodeAt(0) < 91 && targa2.value.charCodeAt(1) > 64 && targa2.value.charCodeAt(1) < 91 && targa2.value.charCodeAt(2) > 47 && targa2.value.charCodeAt(2) < 58 && targa2.value.charCodeAt(3) > 47 && targa2.value.charCodeAt(3) < 58 && targa2.value.charCodeAt(4) > 47 && targa2.value.charCodeAt(4) < 58 && targa2.value.charCodeAt(5) > 64 && targa2.value.charCodeAt(5) < 91 && targa2.value.charCodeAt(6) > 64 && targa2.value.charCodeAt(6) < 91){
+                targhe.push(targa2.value)
+            } else {
+                alert("La targa 2 non è valida");
+            }
+        }
+        //controllo targa 3//
+        if (targa3.value !== ""){
+            if (targa3.value.length === 7 && targa3.value.charCodeAt(0) > 64 && targa3.value.charCodeAt(0) < 91 && targa3.value.charCodeAt(1) > 64 && targa3.value.charCodeAt(1) < 91 && targa3.value.charCodeAt(2) > 47 && targa3.value.charCodeAt(2) < 58 && targa3.value.charCodeAt(3) > 47 && targa3.value.charCodeAt(3) < 58 && targa3.value.charCodeAt(4) > 47 && targa3.value.charCodeAt(4) < 58 && targa3.value.charCodeAt(5) > 64 && targa3.value.charCodeAt(5) < 91 && targa3.value.charCodeAt(6) > 64 && targa3.value.charCodeAt(6) < 91){
+                targhe.push(targa3.value)
+            } else {
+                alert("La targa 3 non è valida");
+            }
+        }
+        let dataeora = [data.value,ora.value]
+        let nMorti = n_morti.value;
+        let nFeriti = n_feriti.value;
+        console.log(posto, targhe, dataeora, nMorti, nFeriti);
+        const url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${posto}&format=json&`;
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+            let lat = parseFloat((parseFloat(data[0]['boundingbox'][0]) + parseFloat(data[0]['boundingbox'][1]))/2);
+            let lon = parseFloat((parseFloat(data[0]['boundingbox'][2]) + parseFloat(data[0]['boundingbox'][3]))/2);
+            console.log(lat, lon);
+            console.log(Milano[0],Milano[1])
+            if (lat > Milano[0] && lat < Milano [1]){
+                if(lon > Milano[2] && lon < Milano [3]){
+                    cordinate.push({ name: posto, coords: [lat, lon], targhe_coinvolte: targhe, dataeora: dataeora, morti: nMorti, feriti: nFeriti });
+                    console.log(cordinate);
+                    mappa();
+                    createTable().render();
+                    modal.classList.remove('show'); // Rimuove la classe "show"
+                    salva();
+                } else {
+                    alert("La cordinate inserite non sono all'interno della zona di Milano");
+                }
+            } else {
+                alert("La località inserita non è all'interno della zona di milano");
+            }
+        
+        });
+    } else {
+        alert('Tutti i campi devono essere compilati!');
+        return false;
+    }
+};
 /************************GESTIONE INSERIMENTO******************/
-
-
 /*************************GESTIONE BARRA DI RICERCA************/
 searchButton.onclick = function() {
     filterTable();
