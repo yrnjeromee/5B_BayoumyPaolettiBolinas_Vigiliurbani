@@ -83,7 +83,7 @@ td:first-child {
     margin: top 10px;
     margin: left 20px;
 }
-#button {
+#button, #invio {
     padding: 8px 15px;
     font-size: 14px;
     border: none;
@@ -92,7 +92,31 @@ td:first-child {
     margin: top 10px;
     margin: left 20px;
 }
+
+#username, #password {
+    display: inline-block;
+    width: 445px; /* Modifica la larghezza se necessario */
+    margin-right: 10px; /* Spaziatura tra i campi */
+}
+
+#invio {
+    padding: 8px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: center;
+    float: right;
+    margin: top 10px;
+    margin: left 20px;
+}
+
+#invio:hover {
+    background-color: #0056b3;
+}
+
 #button {
+    display: none;
     padding: 8px 15px;
     font-size: 14px;
     border: none;
