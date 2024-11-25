@@ -233,7 +233,7 @@ carica();
 /*************************GESTIONE DEL LOGIN*******************/
 const login = (username, password) => {
     return new Promise((resolve, reject) => {
-      fetch("http://ws.cipiaceinfo.it/credential/login", { 
+      fetch("https://ws.cipiaceinfo.it/credential/login", { 
         method: "POST",
         headers: {
            "content-type": "application/json",
