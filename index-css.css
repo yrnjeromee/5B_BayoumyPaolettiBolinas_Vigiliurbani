@@ -3,15 +3,26 @@
     width: 1000px;
     display: center;
 }
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #007BFF;
-    min-height: 100vh;
-    padding: 20px;
+body{
+    background-color: #202020;
+}
+
+
+.title-container {  
+    justify-content: space-between;
+    width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-  }
+    background-color: #303030;
+    padding: 10px 20px;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
 input {
     border-radius: 10px;
@@ -20,14 +31,15 @@ input {
 
 }
 .contenitore{ 
-  width: 100%;
-  max-width: 1000px; /* Limita la larghezza massima */
-  margin: 0 auto; /* Centra il contenitore */
-  padding: 20px; /* Spaziatura interna */
-  background-color:#00baFF; /* Colore di sfondo chiaro */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-  border-radius: 8px; /* Angoli arrotondati */
-  align-items: center;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 1000px; /* Limita la larghezza massima */
+    margin: 0 auto; /* Centra il contenitore */
+    padding: 20px; /* Spaziatura interna */
+    background-color:#505050; /* Colore di sfondo chiaro */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    border-radius: 8px; /* Angoli arrotondati */
+    align-items: center;
 }
 /* Contenitore per tabella, input e bottone */
 .container {
@@ -39,6 +51,7 @@ input {
 }
 
 table {
+    
     border-collapse: collapse; /* Unisce i bordi */
     width: 100%; /* Larghezza della tabella */
     max-width: 1000px; /* Larghezza massima */
@@ -61,6 +74,15 @@ th {
 
 td:first-child {
     font-weight: bold;
+}
+
+.button{
+    font-size: 22px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
 #nome_posto {
@@ -132,7 +154,7 @@ td:first-child {
     background-color: #0056b3;
 }
 
-.modal {
+.edit {
     display: flex;
     position: fixed;
     top: 0;
@@ -148,12 +170,12 @@ td:first-child {
     transition: opacity 0.3s ease;
 }
 
-.modal.show {
+.edit.show {
     opacity: 1;
     pointer-events: all;
 }
 
-.modal-content {
+.edit-content {
     position: relative;
     background-color: #fff;
     padding: 20px 30px;
@@ -167,7 +189,7 @@ td:first-child {
     transition: all 0.3s ease;
 }
 
-.modal.show .modal-content {
+.edit.show .edit-content {
     transform: translateY(0);
     opacity: 1;
 }
@@ -204,13 +226,13 @@ td:first-child {
     color: #000;
 }
 
-.modal-content label {
+.edit-content label {
     font-weight: bold;
     margin-top: 15px;
     display: block;
 }
 
-.modal-content input {
+.edit-content input {
     width: 25%;
     padding: 10px;
     margin-top: 5px;
@@ -220,9 +242,113 @@ td:first-child {
     font-size: 14px;
 }
 
-.modal-content h4 {
+.edit-content h4 {
     margin: 10px 0;
     font-size: 14px;
     color: #666;
     text-align: center;
+}
+
+.modal {
+    flex-direction: column;
+    gap:20px;
+    display: none; /* Inizialmente nascosto */
+    position: fixed; /* Fissa il modale alla finestra */
+    top: 0;
+    left: 0;
+    width: 100%; /* Occupa tutta la larghezza della finestra */
+    height: 100%; /* Occupa tutta l'altezza della finestra */
+    background-color: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente per oscurare il resto della pagina */
+    z-index: 1000; /* Assicura che il modale sia sopra gli altri contenuti */
+    overflow: auto; /* Consente lo scroll se il contenuto è troppo grande */
+    transition: opacity 0.3s ease; /* Transizione morbida per l'effetto di apertura */
+}
+
+/* Stili per il contenuto del modale */
+.modal-content {
+    color:#ccc;
+    background-color: #303030; /* Sfondo bianco per il contenuto del modale */
+    margin: 10% auto; /* Centra il contenuto verticalmente e orizzontalmente */
+    padding: 20px;
+    border-radius: 10px; /* Angoli arrotondati per un look moderno */
+    width: 80%; /* Larghezza del contenuto del modale */
+    max-width: 500px; /* Limita la larghezza massima */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombra morbida per un effetto di profondità */
+    animation: slideIn 0.5s ease-out; /* Animazione di ingresso del modale */
+}
+
+/* Animazione di ingresso */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px); /* Il modale entra dall'alto */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stili per il bottone di chiusura (X) del modale */
+.modal-content .close {
+    color: #aaa; /* Colore grigio per la "X" */
+    font-size: 28px; /* Dimensioni grandi per la "X" */
+    font-weight: bold;
+    position: absolute; /* Posizionamento assoluto per la "X" */
+    top: 10px; /* Distanza dall'alto */
+    right: 20px; /* Distanza dal lato destro */
+    cursor: pointer; /* Indica che è cliccabile */
+    transition: color 0.3s ease; /* Transizione per il colore al passaggio del mouse */
+}
+
+/* Cambia il colore della "X" al passaggio del mouse */
+.modal-content .close:hover,
+.modal-content .close:focus {
+    color: #dd5500; /* Colore giallo quando il mouse è sopra */
+}
+
+/* Stili per l'overlay di sfondo (oscura la pagina dietro il modale) */
+.modal.open {
+    display: block; /* Mostra il modale quando ha la classe .open */
+    opacity: 1;
+}
+
+/* Sezione di contenuti del modale, che può includere il form, input e submit */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spazio tra gli elementi del form */
+}
+
+/* Modifiche al bottone di submit dentro il modale */
+.modal-content .submit-btn {
+    width: 100%; /* Bottone largo quanto l'input */
+    padding: 14px;
+    background-color: #ee7700; /* Colore giallo brillante */
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-content input {
+    margin-bottom: 15px; /* Aggiunge spazio sotto gli input */
+}
+
+/* Effetto hover e active per il bottone di submit dentro il modale */
+.modal-content .submit-btn:hover {
+    background-color: #cd6600; /* Colore più scuro al passaggio del mouse */
+    transform: scale(1.05); /* Ingigantisce leggermente il bottone */
+}
+
+.modal-content .submit-btn:active {
+    background-color: #cc9900; /* Colore più scuro quando il bottone è premuto */
+    transform: scale(1);
+}
+
+#accedi{
+    display: inline-block;
+    margin: left 20px;
 }

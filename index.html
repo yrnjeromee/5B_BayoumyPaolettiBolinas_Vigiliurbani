@@ -7,6 +7,10 @@
      <link rel="stylesheet" href="index-css.css">
   </head>
   <body>
+    <div class="title-container">
+      <h1>Vigili Urbani</h1>
+      <button id="accedi" class="button">accedi</button>
+    </div>
     <div class="contenitore">
     <hr />
     <div id="map"></div>
@@ -14,8 +18,8 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
     <hr />
-    <div id="modal" class="modal">
-      <div class="modal-content">
+    <div id="edit" class="edit">
+      <div class="edit-content">
           <span id="chiudiModale" class="close">&times;</span>
           <h2>Inserisci i dati del nuovo incidente</h2>
           <label>Indirizzo:</label>
@@ -38,10 +42,14 @@
     <button type="button" id="searchButton">Cerca</button>
   </div>
       <table id="table"></table>
-      <input type="text" id="username" placeholder="username" required>
-      <input type="text" id="password" placeholder="password" required>
-      <button type="button" id="invio">Invio</button>
       <button type="button" id="button">Edit</button>
+    </div>
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <input type="text" id="username" placeholder="username" required>
+        <input type="text" id="password" placeholder="password" required>
+        <button type="button" id="submit" class="button">submit</button>
+      </div>
     </div>
     <script src="index-js.js" type="module"></script>
   </body>

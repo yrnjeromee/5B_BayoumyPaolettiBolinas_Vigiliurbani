@@ -1,9 +1,10 @@
-import { API_KEY } from './cartella/config.js';
+import { API_KEY } from './config.js';
 const Milano = ["45.3867381","45.5358482","9.0408867","9.2781103"];
 const tabella = document.getElementById("table");
-const modal = document.getElementById('modal');
-const button = document.getElementById("button");//alla pressione creare un modale
-const chiudiModale = document.getElementById('chiudiModale');
+const edit = document.getElementById('edit');
+const accedi = document.getElementById('accedi');
+const button = document.getElementById("button");//alla pressione creare un edite
+const chiudiModale = document.getElementById('chiudiedite');
 const via = document.getElementById("via");
 const civico = document.getElementById("civico");
 const targa1 = document.getElementById("targa1");
@@ -69,20 +70,22 @@ const createTable = () => {
 
 
 /************************GESTIONE MODALE***********************/
-
+accedi.onclick = () => {
+    modal.style.display = 'block';
+}
 button.onclick = () => {
-    modal.classList.add('show'); // Aggiunge la classe "show"
+    edit.classList.add('show'); // Aggiunge la classe "show"
 };
 
-// Chiudi la modale
+// Chiudi la edite
 chiudiModale.onclick = () => {
-    modal.classList.remove('show'); // Rimuove la classe "show"
+    edit.classList.remove('show'); // Rimuove la classe "show"
 };
 
-// Chiudi la modale quando si clicca fuori dal contenuto
+// Chiudi la edite quando si clicca fuori dal contenuto
 window.onclick = (event) => {
     if (event.target === modal) {
-        modal.classList.remove('show');
+        modal.style.display = 'none';
     }
 };
 
@@ -135,7 +138,7 @@ confirmButton.onclick = () => {
                     console.log(cordinate);
                     mappa();
                     createTable().render();
-                    modal.classList.remove('show'); // Rimuove la classe "show"
+                    edit.classList.remove('show'); // Rimuove la classe "show"
                     salva();
                 } else {
                     alert("La cordinate inserite non sono all'interno della zona di Milano");
