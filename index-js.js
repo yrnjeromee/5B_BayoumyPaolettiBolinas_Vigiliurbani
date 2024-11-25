@@ -1,10 +1,11 @@
 import { API_KEY } from './config.js';
+import { CACHE_REMOTA_KEY } from './config.js';
 const Milano = ["45.3867381","45.5358482","9.0408867","9.2781103"];
 const tabella = document.getElementById("table");
 const edit = document.getElementById('edit');
 const accedi = document.getElementById('accedi');
-const button = document.getElementById("button");//alla pressione creare un edite
-const chiudiModale = document.getElementById('chiudiedite');
+const button = document.getElementById("button");
+const chiudiModale = document.getElementById('chiudiModale');
 const via = document.getElementById("via");
 const civico = document.getElementById("civico");
 const targa1 = document.getElementById("targa1");
@@ -19,6 +20,9 @@ const searchBar = document.getElementById("searchBar");
 const searchButton = document.getElementById("searchButton");
 const MAIUSCOLE = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 const numeri = ["1","2","3","4","5","6","7","8","9","0"];
+const inputUsername = document.getElementById("username");
+const inputPassword = document.getElementById("password");
+const inputSubmit = document.getElementById("submit");
 
 let cordinate = [];
 
@@ -227,5 +231,37 @@ carica();
 /*************************GESTIONE SALVATAGGIO E CARICAMENTO***/
 
 /*************************GESTIONE DEL LOGIN*******************/
-
+const login = (username, password) => {
+    return new Promise((resolve, reject) => {
+      fetch("http://ws.cipiaceinfo.it/credential/login", { 
+        method: "POST",
+        headers: {
+           "content-type": "application/json",
+           "key": CACHE_REMOTA_KEY
+        },
+        body: JSON.stringify({
+           username: username,
+           password: password
+        })
+      })
+      .then(r => r.json())
+      .then(r => {
+           resolve(r.result); 
+        })
+      .catch(reject);
+    });
+  };
+  
+  inputSubmit.onclick = () => {
+    login(inputUsername.value, inputPassword.value).then((result) => {
+      if (result) {
+        console.log("login effettuata con successo");
+        modal.style.display = 'none';
+        accedi.style.display = 'none';
+        button.style.display = 'block';
+     } else {
+       console.log("login fallita");
+     }
+  })
+}
 /*************************GESTIONE DEL LOGIN*******************/
